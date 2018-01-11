@@ -6,7 +6,7 @@ These are just snippets used in the lecture, not actual code to run!
 TODO: 1. PASSIVELY LISTEN TO THE LECTURE ABOUT ANALOG SENSORS
 https://docs.google.com/presentation/d/1U00IlFqIT_S2v9HV-TKSO6Y6foH4sDom9yytsV_PWfY/edit?usp=sharing
 
-Author: David Fisher says your a fucking nerd
+Author: David Fisher says you're a fucking nerd
 """
 
 import ev3dev.ev3 as ev3
