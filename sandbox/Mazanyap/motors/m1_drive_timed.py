@@ -8,8 +8,10 @@ to collect data, then make an equation to figure out the time needed given the d
 
 Note: If future modules you will learn different (BETTER) ways to drive a given distance.
 
-Authors: David Fisher and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher and Alex Mazany.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
+
+
 
 # TODO: 2. Get a yardstick or tape measure to do some testing with /examples/motors/drive_input_speed.py
 #   Have your whole team work this activity together.
@@ -58,13 +60,49 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 #   Note: To repeat again, in later modules you will learn different (better) ways to travel a given distance using
 #     motor encoders, so just make a simple rough approximation here, since later we'll do it better in a different way.
 #
-# TODO: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
+    #t = distance / (speed * .011)
+
+# Done: 3. Copy the content of the /examples/motors/drive_input_speed.py program and place it below these comments.
 #   Change the initial print and speak commands to reflect this module, like this...
 #    print("--------------------------------------------")
 #    print("  Timed Driving")
 #    print("--------------------------------------------")
 #    ev3.Sound.speak("Timed Driving").wait()
-# TODO: 4. Change the input questions from:
+
+import ev3dev.ev3 as ev3
+import time
+
+
+def main():
+    print("--------------------------------------------")
+    print("  Timed Driving")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Timed Driving").wait()
+
+    # Connect two large motors on output ports B and C
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    # Check that the motors are actually connected
+    assert left_motor.connected
+    assert right_motor.connected
+
+    time_s = 1  # Any value other than 0.
+    while time_s != 0:
+        speed = int(input("Enter a speed for the motors (0 to 900 dps): "))
+        distance = int(input("Enter a distance to drive (inches): "))
+        left_motor.run_forever(speed_sp= speed)
+        right_motor.run_forever(speed_sp= speed)
+
+        time_s = distance / (speed * .011)
+        time.sleep(time_s)
+        left_motor.stop()
+        right_motor.stop(stop_action="brake")
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+# Done: 4. Change the input questions from:
 #   Enter a speed for the left motor (0 to 900 dps):
 #   Enter a speed for the right motor (0 to 900 dps):
 #   Enter a time to drive (seconds):
@@ -89,3 +127,4 @@ Authors: David Fisher and PUT_YOUR_NAME_HERE.
 # TODO: 8. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 #  Observation you should make, the pattern run_forever-->time.sleep-->stop naturally blocks code execution until done.
+
