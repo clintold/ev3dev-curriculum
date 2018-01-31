@@ -20,4 +20,8 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
     
     # TODO: Implement the Snatch3r class as needed when working the sandox exercises
-    # (and delete these comments)
+    def __init__(self):
+
+
+    def drive_inches(self):
+
