@@ -65,6 +65,14 @@ def main():
             print('right')
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+        if btn.down:
+            if current_color_index==4:
+                current_color_index=0
+            current_color_index+=1
+            ev3.Leds.set_color(ev3.Leds.LEFT, led_colors[current_color_index])
+            ev3.Leds.set_color(ev3.Leds.RIGHT, led_colors[current_color_index])
+        while btn.down:
+            time.sleep(0.01)
 
 
         # Done: 3. Implement the left, right, and up buttons as follows:
