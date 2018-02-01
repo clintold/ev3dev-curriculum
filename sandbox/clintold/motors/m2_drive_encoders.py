@@ -39,20 +39,21 @@ def main():
     motor_turns_needed_in_degrees = inches_target * degrees_per_inch
     left_motor.run_to_rel_pos(position_sp= motor_turns_needed_in_degrees)
     right_motor.run_to_rel_pos(position_sp= motor_turns_needed_in_degrees, speed_sp=speed)
+    left_motor.wait_while(ev3.Motor.STATE_RUNNING)
     left_motor.stop_action()
     right_motor.stop_action()
-    ev3.Sound.beep().wait()
+    ev3.Sound.beep()
 
     print("Goodbye!")
     ev3.Sound.speak("Goodbye").wait()
 
-# TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
+# Done: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
 
-# TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
+# Done: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 #   ev3.Sound.beep().wait()
 
-# TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
+# Done: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
 #   You will need to determine the position_sp value to pass into the run_to_rel_pos command as a named argument.
 #   Assume the diameter of the wheel is 1.3" (close enough).  A 1.3" diameter wheel results in approximately a 4"
 #     circumference, so 360 degrees = 4 inches of travel.
@@ -83,4 +84,4 @@ def main():
 #
 # Observations you should make, run_to_rel_pos is easier to use since it uses encoders that are independent of speed.
 
-
+main()
