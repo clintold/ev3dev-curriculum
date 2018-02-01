@@ -18,10 +18,27 @@ import time
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
-    
-    # TODO: Implement the Snatch3r class as needed when working the sandox exercises
+
     def __init__(self):
+        self.left_motor= ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+        assert self.left_motor.connected
+        assert self.right_motor.connected
 
 
-    def drive_inches(self):
+    def drive_inches(self, inches_target, speed_deg_per_second):
+        self.left_motor.run_to_rel_pos(position_sp= (inches_target * 90), speed_sp= speed_deg_per_second, stop_action="brake")
+        self.right_motor.run_to_rel_pos(position_sp= (inches_target * 90), speed_sp= speed_deg_per_second, stop_action="brake")
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        #self.left_motor.stop(stop_action="brake")
+        #self.right_motor.stop(stop_action="brake")
+
+    def turn_degrees(self,degrees_to_turn, turn_speed_sp):
+        self.left_motor.run_to_rel_pos(position_sp= (-degrees_to_turn *1.44 * math.pi), speed_sp=turn_speed_sp, stop_action="brake")
+        self.right_motor.run_to_rel_pos(position_sp=(degrees_to_turn * 1.44 * math.pi), speed_sp=turn_speed_sp, stop_action="brake")
+        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        #self.left_motor.stop(stop_action="brake")
+        #self.right_motor.stop(stop_action="brake")
 

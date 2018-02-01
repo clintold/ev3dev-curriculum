@@ -89,7 +89,7 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        speed = int(input("Enter a speed for the motors (0 to 900 dps): "))
+        speed = int(input("Enter a speed for the motors (1 to 900 dps): "))
         distance = int(input("Enter a distance to drive (inches): "))
         left_motor.run_forever(speed_sp= speed)
         right_motor.run_forever(speed_sp= speed)
