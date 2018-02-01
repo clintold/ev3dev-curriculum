@@ -51,7 +51,8 @@ def main():
     #   .on_right to call handle_right_button (that function does not exist yet, you will write it in todo4)
     # Here is one for free...
     #  btn.on_up = handle_up_button
-
+    btn.on_up = handle_up_button
+    
     # TODO: 5. Note #4 is lower (this is TO DO #5 which you should do after #4).
     # Add a lambda callback for on_backspace.  The syntax of lambda is:
     #   btn.on_backspace = lamdba predefined_inputs: function_name(parameters)
