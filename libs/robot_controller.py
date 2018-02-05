@@ -20,6 +20,10 @@ class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
 
     def __init__(self):
+        self.running = True
+        self.touch_sensor = ev3.TouchSensor()
+        self.seeker = ev3.BeaconSeeker(channel=1)
+
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
@@ -42,3 +46,39 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=(degrees_to_turn * 1.44 * math.pi), speed_sp=turn_speed_sp,
                                         stop_action="brake")
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def arm_calibration(self):
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        assert self.touch_sensor
+
+        arm_motor.run_forever(speed_sp=900)
+        if self.touch_sensor.is_pressed:
+            arm_motor.stop(stop_action='brake')
+
+        arm_motor.run_to_rel_pos(position_sp=-5112)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        arm_motor.postion = 0
+
+    def arm_up(self):
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+        assert self.touch_sensor
+
+        arm_motor.run_forever(speed_sp=900)
+        if self.touch_sensor.is_pressed:
+            arm_motor.stop(stop_action='brake')
+
+    def arm_down(self):
+        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert arm_motor.connected
+
+        arm_motor.run_to_abs_pos(position_sp=0)
+        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def shutdown(self):
+        self.running = False
+        self.left_motor.stop(stop_action='brake')
+        self.right_motor.stop(stop_action='brake')
+
+        ev3.Sound.speak('Goodbye')
