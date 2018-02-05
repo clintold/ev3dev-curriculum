@@ -75,7 +75,6 @@ def main():
     #   .on_blue_up   to call handle_blue_up_1   (that exist already) with state and dc as parameters
     #   .on_blue_down to call handle_blue_down_1 (that exist already) with state and dc as parameters
     rc1 = ev3.RemoteControl(channel=1)
-
     rc1.on_red_up = lambda state: handle_red_up_1(state, dc)
     rc1.on_red_down = lambda state: handle_red_down_1(state, dc)
     rc1.on_blue_up = lambda state: handle_blue_up_1(state, dc)
