@@ -46,6 +46,12 @@ class DataContainer(object):
 
 
 def main():
+    led_colors = [ev3.Leds.BLACK,  # This list is useful for the down button in TO DO 4.
+                  ev3.Leds.GREEN,
+                  ev3.Leds.RED,
+                  # ev3.Leds.ORANGE,  # Too close to another color in my opinion
+                  # ev3.Leds.YELLOW,  # Too close to another color in my opinion
+                  ev3.Leds.AMBER]
     print("--------------------------------------------")
     print("IR Remote")
     print(" - Use IR remote channel 1 to drive around")
@@ -80,11 +86,56 @@ def main():
 
     robot.arm_calibration()  # Start with an arm calibration in this program.
 
+    def up_stuff(button_state, motor):
+        if button_state:
+            ev3.Sound.speak("I R Remote")
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+            motor.run_forever(speed_sp=600)
+        else:
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+            motor.stop(stop_action='brake')
+    def down_stuff(button_state, motor):
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
+            motor.run_forever(speed_sp=-600)
+        else:
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
+            motor.stop(stop_action='brake')
+    def up_stuff2(button_state, motor):
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+            motor.run_forever(speed_sp=600)
+        else:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            motor.stop(stop_action='brake')
+    def down_stuff2(button_state, motor):
+        if button_state:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
+            motor.run_forever(speed_sp=-600)
+        else:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
+            motor.stop(stop_action='brake')
+
+
+    rc1 = ev3.RemoteControl(channel=1)
+    rc1.on_red_up = lambda state: up_stuff(state, left_motor)
+    rc1.on_red_down = lambda state: down_stuff(state, left_motor)
+    rc1.on_blue_up = lambda state: up_stuff2(state, right_motor)
+    rc1.on_blue_down = lambda state: down_stuff2(state, right_motor)
+
+    rc2 = ev3.RemoteControl(channel=2)
+    rc2.on_red_up = lambda state: handle_arm_up_button(state, robot)
+    rc2.on_red_down = lambda state: handle_arm_down_button(state, robot)
+    rc2.on_blue_up = lambda state: handle_calibrate_button(state, robot)
+
+    btn.on_backspace = lambda state: handle_shutdown(state, dc)
+
     while dc.running:
         # TODO: 5. Process the RemoteControl objects.
         btn.process()
         time.sleep(0.01)
-
+        rc1.process()
+        rc2.process()
     # Done: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
