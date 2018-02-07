@@ -23,12 +23,14 @@ class Snatch3r(object):
         self.running = True
         self.touch_sensor = ev3.TouchSensor()
         self.seeker = ev3.BeaconSeeker(channel=1)
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
 
         self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
         assert self.left_motor.connected
         assert self.right_motor.connected
+        assert self.arm_motor.connected
 
     def drive_inches(self, inches_target, speed_deg_per_second):
         """Drives the robot forward using the given speeds and distances"""
@@ -48,30 +50,30 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_calibration(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        assert arm_motor.connected
+        #arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert self.arm_motor.connected
         assert self.touch_sensor
 
-        arm_motor.run_forever(speed_sp=900)
+        self.arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
 
-        arm_motor.stop(stop_action='brake')
+        self.arm_motor.stop(stop_action='brake')
         ev3.Sound.beep().wait()
-        arm_motor.run_to_rel_pos(position_sp=-5112)
-        arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        arm_motor.position = 0
+        self.arm_motor.run_to_rel_pos(position_sp=-5112)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        self.arm_motor.position = 0
 
     def arm_up(self):
-        arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
-        assert arm_motor.connected
+        #arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        assert self.arm_motor.connected
         assert self.touch_sensor
 
-        arm_motor.run_forever(speed_sp=900)
+        self.arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
 
-        arm_motor.stop(stop_action='brake')
+        self.arm_motor.stop(stop_action='brake')
         ev3.Sound.beep().wait()
 
     def arm_down(self):
