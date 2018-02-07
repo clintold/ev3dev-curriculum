@@ -95,7 +95,7 @@ def set_num_dice(mqtt_client, num_dice_entry):
 
 # TODO: 7. See if you can solve the mystery.  Based on the dice how can you solve Petals on a Rose?
 # To check off this part of the assignment figure out the pattern and win the game (without looking at the EV3 code).
-wow test
+
 
 def quit_program(mqtt_client, shutdown_ev3):
     if shutdown_ev3:
