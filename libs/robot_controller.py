@@ -58,7 +58,7 @@ class Snatch3r(object):
 
         arm_motor.run_to_rel_pos(position_sp=-5112)
         arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        arm_motor.postion = 0
+        arm_motor.position = 0
 
     def arm_up(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
