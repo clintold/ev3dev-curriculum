@@ -95,7 +95,7 @@ class MyDelegate(object):
                 led_side_string, led_color_string))
         else:
             ev3.Leds.set_color(self.side, self.color)
-
+#
 
 def main():
     print("--------------------------------------------")
