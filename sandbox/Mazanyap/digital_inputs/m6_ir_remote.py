@@ -88,6 +88,7 @@ def main():
 
     def up_stuff(button_state, motor):
         if button_state:
+            ev3.Sound.speak("I R Remote")
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
             motor.run_forever(speed_sp=600)
         else:
