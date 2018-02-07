@@ -110,6 +110,7 @@ def main():
     # Note: on EV3 you call connect_to_pc, but in the PC code it will call connect_to_ev3
     my_delegate=MyDelegate()
     mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
     # Buttons on EV3 (these obviously assume TO DO: 3. is done)
     btn = ev3.Button()
     btn.on_up = lambda state: handle_button_press(state, mqtt_client, "Up")
@@ -125,6 +126,7 @@ def main():
     ev3.Sound.speak("Goodbye").wait()
     ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
     ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+
 
 
 # ----------------------------------------------------------------------
