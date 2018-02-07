@@ -50,7 +50,6 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_calibration(self):
-        #arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert self.arm_motor.connected
         assert self.touch_sensor
 
@@ -65,7 +64,6 @@ class Snatch3r(object):
         self.arm_motor.position = 0
 
     def arm_up(self):
-        #arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert self.arm_motor.connected
         assert self.touch_sensor
 
