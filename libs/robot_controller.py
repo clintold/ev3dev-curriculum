@@ -88,3 +88,8 @@ class Snatch3r(object):
         self.right_motor.stop(stop_action='brake')
 
         ev3.Sound.speak('Goodbye')
+
+    def loop_forever(self):
+        ''' waits forever'''
+        while self.running:
+            time.sleep(0.01)
