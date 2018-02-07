@@ -13,7 +13,7 @@
 
 import ev3dev.ev3 as ev3
 import math
-"""import time"""
+import time
 
 
 class Snatch3r(object):
@@ -53,9 +53,11 @@ class Snatch3r(object):
         assert self.touch_sensor
 
         arm_motor.run_forever(speed_sp=900)
-        if self.touch_sensor.is_pressed:
-            arm_motor.stop(stop_action='brake')
+        while not self.touch_sensor.is_pressed:
+            time.sleep(0.01)
 
+        arm_motor.stop(stop_action='brake')
+        ev3.Sound.beep().wait()
         arm_motor.run_to_rel_pos(position_sp=-5112)
         arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         arm_motor.position = 0
@@ -66,8 +68,11 @@ class Snatch3r(object):
         assert self.touch_sensor
 
         arm_motor.run_forever(speed_sp=900)
-        if self.touch_sensor.is_pressed:
-            arm_motor.stop(stop_action='brake')
+        while not self.touch_sensor.is_pressed:
+            time.sleep(0.01)
+
+        arm_motor.stop(stop_action='brake')
+        ev3.Sound.beep().wait()
 
     def arm_down(self):
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
@@ -75,6 +80,7 @@ class Snatch3r(object):
 
         arm_motor.run_to_abs_pos(position_sp=0)
         arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
 
     def shutdown(self):
         self.running = False
