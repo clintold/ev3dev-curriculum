@@ -94,6 +94,7 @@ def main():
         else:
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             motor.stop(stop_action='brake')
+
     def down_stuff(button_state, motor):
         if button_state:
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.RED)
@@ -101,6 +102,7 @@ def main():
         else:
             ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.BLACK)
             motor.stop(stop_action='brake')
+
     def up_stuff2(button_state, motor):
         if button_state:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
@@ -108,6 +110,7 @@ def main():
         else:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
             motor.stop(stop_action='brake')
+
     def down_stuff2(button_state, motor):
         if button_state:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.RED)
@@ -115,7 +118,6 @@ def main():
         else:
             ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.BLACK)
             motor.stop(stop_action='brake')
-
 
     rc1 = ev3.RemoteControl(channel=1)
     rc1.on_red_up = lambda state: up_stuff(state, left_motor)
