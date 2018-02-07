@@ -83,7 +83,7 @@ def main():
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
     # right_button and '<Right>' key
-    right_button['<command>'] = lambda: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get()))
+    right_button['command'] = lambda: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get()))
     root.bind('<Right>', lambda event: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get())))
 
     back_button = ttk.Button(main_frame, text="Back")
@@ -136,7 +136,7 @@ def send_down(mqtt_client):
     mqtt_client.send_message("arm_down")
 
 
-def move(mqtt_client,left_speed,right_speed):
+def move(mqtt_client, left_speed ,right_speed):
     print('move')
     mqtt_client.send_message("drive until otherwise",[right_speed, left_speed])
 
