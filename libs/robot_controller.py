@@ -103,6 +103,6 @@ class Snatch3r(object):
     def stop(self):
         self.left_motor.stop(stop_action="brake")
         self.right_motor.stop(stop_action="brake")
-    
+
 
 
