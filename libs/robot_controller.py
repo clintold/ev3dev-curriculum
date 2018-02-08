@@ -91,5 +91,11 @@ class Snatch3r(object):
 
     def loop_forever(self):
         ''' waits forever'''
+        self.running = True
         while self.running:
             time.sleep(0.01)
+
+    def drive_until_otherwise(self, rspeed, lspeed):
+        self.left_motor.run_forever(speed_sp=lspeed)
+        self.right_motor.run_forever(speed_sp=rspeed)
+
