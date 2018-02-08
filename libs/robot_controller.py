@@ -29,7 +29,7 @@ class Snatch3r(object):
         self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
-        
+
         assert self.color_sensor
         assert self.ir_sensor
         assert self.left_motor.connected
