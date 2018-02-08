@@ -35,6 +35,7 @@ import robot_controller as robo
 
 def main():
     robot = robo.Snatch3r()
+    robot.arm_calibration()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
     # mqtt_client.connect_to_pc("35.194.247.175")  # Off campus IP address of a GCP broker
