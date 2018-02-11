@@ -37,7 +37,7 @@ def main():
         width = robot.pixy.value(3)
         height = robot.pixy.value(4)
 
-        print('(' + x + ',' + y + ')' + width + height)
+        print("(X, Y) = ({}, {})    Width = {} Height = {}".format(robot.pixy.value(1), robot.pixy.value(2), robot.pixy.value(3), robot.pixy.value(4)))
 
         # Done: 3. Read the Pixy values for x, y, width, and height
         # Print the values (much like the print_pixy_readings example)
