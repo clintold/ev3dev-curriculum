@@ -101,10 +101,10 @@ def seek_beacon(robot):
                     robot.left_motor.run_forever(speed_sp=forward_speed)
                     print("On the right heading. Distance: ", current_distance)
                     robot.right_motor.run_forever(speed_sp=forward_speed)
-
             if 2 < math.fabs(current_heading) < 10:
-                if current_distance < 0:
-
+                while current_distance < 0:
+                    robot.right_motor.run_forever(-turn_speed)
+                    robot.left_motor.run_forever(turn_speed)
                 print("On the right heading. Distance: ", current_distance)
                 # You add more!
 
