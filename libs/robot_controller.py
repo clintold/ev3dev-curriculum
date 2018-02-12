@@ -124,6 +124,7 @@ class Snatch3r(object):
                 print("IR Remote not found. Distance is -128")
                 self.stop()
             else:
+                #It will determine the heading and then travel to it. Once in range, it will pick up.
                 if math.fabs(current_heading) <= 2:
                     if current_distance > 1:
                         # Close enough of a heading to move forward
