@@ -56,6 +56,7 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
     def arm_calibration(self):
+        """Raises and lowers the arm to figure out the bottom position"""
         assert self.arm_motor.connected
         assert self.touch_sensor
 
@@ -70,6 +71,7 @@ class Snatch3r(object):
         self.arm_motor.position = 0
 
     def arm_up(self):
+        """Raises the robot's arm"""
         assert self.arm_motor.connected
         assert self.touch_sensor
 
@@ -81,6 +83,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def arm_down(self):
+        """Lowers the robot arm to the calibrated 0 position"""
         arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         assert arm_motor.connected
 
@@ -89,6 +92,7 @@ class Snatch3r(object):
         ev3.Sound.beep().wait()
 
     def shutdown(self):
+        """Stops the robot's motors, says goobye, and registers as off"""
         self.running = False
         self.left_motor.stop(stop_action='brake')
         self.right_motor.stop(stop_action='brake')
@@ -96,20 +100,23 @@ class Snatch3r(object):
         ev3.Sound.speak('Goodbye')
 
     def loop_forever(self):
-        ''' waits forever'''
+        """Waits forever for a certain imput"""
         self.running = True
         while self.running:
             time.sleep(0.01)
 
     def drive_until_otherwise(self, rspeed, lspeed):
+        """Turns the robot at a certain speed forever"""
         self.left_motor.run_forever(speed_sp=lspeed)
         self.right_motor.run_forever(speed_sp=rspeed)
 
     def stop(self):
+        """Stops the robot's motors"""
         self.left_motor.stop(stop_action="brake")
         self.right_motor.stop(stop_action="brake")
 
     def seek_beacon(self):
+        """The robot seeks out the ir controller's beacon"""
         forward_speed = 300
         turn_speed = 100
 
@@ -124,7 +131,6 @@ class Snatch3r(object):
                 print("IR Remote not found. Distance is -128")
                 self.stop()
             else:
-                #It will determine the heading and then travel to it. Once in range, it will pick up.
                 if math.fabs(current_heading) <= 2:
                     if current_distance > 1:
                         # Close enough of a heading to move forward
