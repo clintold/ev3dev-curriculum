@@ -150,6 +150,7 @@ class Snatch3r(object):
                         # You add more!
                     else:
                         print("Found it")
+                        time.sleep(1)
                         self.right_motor.stop(stop_action="brake")
                         self.left_motor.stop(stop_action="brake")
                         return True

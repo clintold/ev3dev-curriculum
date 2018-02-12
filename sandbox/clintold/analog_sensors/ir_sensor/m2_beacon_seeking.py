@@ -128,18 +128,7 @@ def seek_beacon(robot):
                     robot.right_motor.stop(stop_action="brake")
             else:
                 print("failure")
-        time.sleep(0.3)
-
-
-
-
-
-
-
-
-        time.sleep(0.2)
-
-    # The touch_sensor was pressed to abort the attempt if this code runs.
+        time.sleep(0.3)    # The touch_sensor was pressed to abort the attempt if this code runs.
     print("Abandon ship!")
     robot.stop()
     return False
