@@ -93,22 +93,43 @@ def seek_beacon(robot):
             #    print("Heading is too far off to fix: ", current_heading)
 
             # Here is some code to help get you started
-            while math.fabs(current_heading) <= 2:
-                # Close enough of a heading to move forward
-                if current_distance == 0:
-                    return
-                else:
+            if math.fabs(current_heading) <= 2:
+                if current_distance > 1:
+                    # Close enough of a heading to move forward
                     robot.left_motor.run_forever(speed_sp=forward_speed)
                     print("On the right heading. Distance: ", current_distance)
                     robot.right_motor.run_forever(speed_sp=forward_speed)
-            while 2 < math.fabs(current_heading) < 10:
-                while current_distance < 0:
+                    # You add more!
+                else:
+                    print("Found it")
+                    robot.right_motor.stop(stop_action="brake")
+                    robot.left_motor.stop(stop_action="brake")
+                    return True
+            elif math.fabs(current_heading) > 10:
+                print("Heading is too far off to fix: ", current_heading)
+                robot.left_motor.stop(stop_action="brake")
+                robot.right_motor.stop(stop_action="brake")
+                return False
+            elif current_heading > 2:
+                print("Adjusting heading: ", current_heading)
+                while current_heading > 2:
+                    current_heading = beacon_seeker.heading  # use the beacon_seeker heading
                     robot.right_motor.run_forever(speed_sp=-turn_speed)
                     robot.left_motor.run_forever(speed_sp=turn_speed)
-                while current_distance > 0:
+                    robot.left_motor.stop(stop_action="brake")
+                    robot.right_motor.stop(stop_action="brake")
+            elif current_heading < -2:
+                print("Adjusting heading: ", current_heading)
+                while current_heading < -2:
+                    current_heading = beacon_seeker.heading  # use the beacon_seeker heading
                     robot.right_motor.run_forever(speed_sp=turn_speed)
                     robot.left_motor.run_forever(speed_sp=-turn_speed)
-                # You add more!
+                    robot.left_motor.stop(stop_action="brake")
+                    robot.right_motor.stop(stop_action="brake")
+            else:
+                print("failure")
+        time.sleep(0.3)
+
 
 
 
