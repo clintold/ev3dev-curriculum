@@ -123,7 +123,7 @@ class Snatch3r(object):
         while not self.touch_sensor.is_pressed:
             # The touch sensor can be used to abort the attempt (sometimes handy during testing)
 
-            # Done: 3. Use the beacon_seeker object to get the current heading and distance.
+            # Use the beacon_seeker object to get the current heading and distance.
             current_heading = self.seeker.heading  # use the beacon_seeker heading
             current_distance = self.seeker.distance  # use the beacon_seeker distance
             if current_distance == -128:
