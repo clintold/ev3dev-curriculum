@@ -93,7 +93,7 @@ def seek_beacon(robot):
             #    print("Heading is too far off to fix: ", current_heading)
 
             # Here is some code to help get you started
-             while math.fabs(current_heading) <= 2:
+            while math.fabs(current_heading) <= 2:
                 # Close enough of a heading to move forward
                 if current_distance == 0:
                     return
