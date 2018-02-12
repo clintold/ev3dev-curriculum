@@ -13,7 +13,7 @@ f - Follow the line until the touch sensor is pressed.  You are allowed to assum
 q - Quit
 
 Authors: David Fisher and Ryan Epstein.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
