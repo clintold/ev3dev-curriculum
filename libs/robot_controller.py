@@ -124,23 +124,6 @@ class Snatch3r(object):
                 print("IR Remote not found. Distance is -128")
                 self.stop()
             else:
-                # done: 4. Implement the following strategy to find the beacon.
-                # If the absolute value of the current_heading is less than 2, you are on the right heading.
-                #     If the current_distance is 0 return from this function, you have found the beacon!  return True
-                #     If the current_distance is greater than 0 drive straight forward (forward_speed, forward_speed)
-                # If the absolute value of the current_heading is NOT less than 2 but IS less than 10, you need to spin
-                #     If the current_heading is less than 0 turn left (-turn_speed, turn_speed)
-                #     If the current_heading is greater than 0 turn right  (turn_speed, -turn_speed)
-                # If the absolute value of current_heading is greater than 10, then stop and print Heading too far off
-                #
-                # Using that plan you should find the beacon if the beacon is in range.  If the beacon is not in range your
-                # robot should just sit still until the beacon is placed into view.  It is recommended that you always print
-                # something each pass through the loop to help you debug what is going on.  Examples:
-                #    print("On the right heading. Distance: ", current_distance)
-                #    print("Adjusting heading: ", current_heading)
-                #    print("Heading is too far off to fix: ", current_heading)
-
-                # Here is some code to help get you started
                 if math.fabs(current_heading) <= 2:
                     if current_distance > 1:
                         # Close enough of a heading to move forward
