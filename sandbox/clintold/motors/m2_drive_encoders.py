@@ -4,7 +4,7 @@ This module lets you practice using the encoder to determine distances while blo
 
 You will now use a run_to_rel_pos command to implement the action drive inches action.
 
-Authors: David Fisher and Luke Clinton.
+Authors: David Fisher and clintold.
 """  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 print("--------------------------------------------")
