@@ -1,4 +1,4 @@
-#Epsteirj CS Project
+#Epsteirj CS Projec
 
 def main():
     robot = robo.Snatch3r()
