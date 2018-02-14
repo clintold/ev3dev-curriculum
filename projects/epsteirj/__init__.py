@@ -1,11 +1,54 @@
-#Epsteirj CS Projec
+#Epsteirj CS Project
 
 def main():
+    digits=5
     robot = robo.Snatch3r()
+    while True:
+        command_to_run = input("Whole number value up to ten to set digit count,r (for running code maker, or q (for quit): ")
+        if command_to_run == '1':
+            digits = 1
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '2':
+            digits = 2
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '3':
+            digits = 3
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '4':
+            digits = 4
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '5':
+            digits = 5
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '6':
+            digits = 6
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '7':
+            digits = 7
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '8':
+            digits = 8
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '9':
+            digits = 9
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == '10':
+            digits = 10
+            print("Length of code is {}.".format(digits))
+        elif command_to_run == 'r':
+            print("Start driving over colors")
+            drive_over_colors(robot,digits)
+        elif command_to_run == 'q':
+            break
+        else:
+            print(command_to_run, "is not a known command. Please enter a valid choice.")
+
+
+def drive_over_colors(robot,digits):
+    
 
 
 
-def drive_over_colors():
 
 
 
@@ -25,7 +68,4 @@ def drive_over_colors():
 
 
 
-
-
-
-main()
+    main()
