@@ -1,0 +1,12 @@
+gui:
+3 radial checkboxes
+Power mode - robot screams as it delivers pizza
+Speed mode- robot moves at max speed
+finnesse mode- robot plays music or leds change color
+
+three pizzas, red green and blue,
+three houses, red green and blue
+give robot a color of pizza and color of destination home, it grabs and goes.
+
+wed- work on gui
+thur - work on destination seeker with pixy

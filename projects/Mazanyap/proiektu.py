@@ -24,7 +24,7 @@ def main():
 
     print("(X, Y) = ({}, {})".format(x, y))
 
-
+    # color follower, can turn at this point, needs to now move closer unless the width/ height are high enough, then grab.
     if x < 150:
         robot.drive_until_otherwise(turn_speed, -turn_speed)
 
