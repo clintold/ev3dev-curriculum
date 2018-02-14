@@ -4,7 +4,9 @@ from tkinter import ttk
 import mqtt_remote_method_calls as com
 
 def main():
-    mqtt_client = None  # Delete this line, it was added temporarily so that the code we gave you had no errors.
+    mqtt_client = com.MqttClient()
+    mqtt_client.connect_to_ev3()
+
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -24,31 +26,41 @@ def main():
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=1, column=2)
 
-
-
-
+    # Done: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
+    #
+    # To help get you started the arm up and down buttons have been implemented.
+    # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
+    # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
 
     forward_button = ttk.Button(main_frame, text="Forward")
     forward_button.grid(row=2, column=1)
     # forward_button and '<Up>' key is done for your here...
-    # forward_button['command'] = lambda: some_callback1(mqtt_client, left_speed_entry, right_speed_entry)
-    # root.bind('<Up>', lambda event: some_callback1(mqtt_client, left_speed_entry, right_speed_entry))
+    forward_button['command'] = lambda: move(mqtt_client, int(left_speed_entry.get()), int(right_speed_entry.get()))
+    root.bind('<Up>', lambda event: move(mqtt_client, int(left_speed_entry.get()), int(right_speed_entry.get())))
 
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
+    left_button['command'] = lambda: move(mqtt_client, -int(left_speed_entry.get()), int(right_speed_entry.get()))
+    root.bind('<Left>', lambda event: move(mqtt_client, -int(left_speed_entry.get()), int(right_speed_entry.get())))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
+    stop_button['command'] = lambda: stop(mqtt_client)
+    root.bind('<space>', lambda event: stop(mqtt_client))
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
     # right_button and '<Right>' key
+    right_button['command'] = lambda: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get()))
+    root.bind('<Right>', lambda event: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get())))
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=1)
     # back_button and '<Down>' key
+    back_button['command'] = lambda: move(mqtt_client, -int(left_speed_entry.get()), -int(right_speed_entry.get()))
+    root.bind('<Down>', lambda event: move(mqtt_client, -int(left_speed_entry.get()), -int(right_speed_entry.get())))
 
     up_button = ttk.Button(main_frame, text="Up")
     up_button.grid(row=5, column=0)
@@ -72,6 +84,15 @@ def main():
     root.mainloop()
 
 
+# ----------------------------------------------------------------------
+# Tkinter callbacks
+# ----------------------------------------------------------------------
+# Done: 4. Implement the functions for the drive button callbacks.
+
+# Done: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
+#
+# Observations you should make, you did basically this same program using the IR Remote, but your computer can be a
+# remote control that can do A LOT more than an IR Remote.  We are just doing the basics here.
 
 
 # Arm command callbacks
@@ -83,6 +104,16 @@ def send_up(mqtt_client):
 def send_down(mqtt_client):
     print("arm_down")
     mqtt_client.send_message("arm_down")
+
+
+def move(mqtt_client, left_speed ,right_speed):
+    print('move')
+    mqtt_client.send_message("drive_until_otherwise", [right_speed, left_speed])
+
+
+def stop(mqtt_client):
+    print("stop")
+    mqtt_client.send_message("stop")
 
 
 # Quit and Exit button callbacks
