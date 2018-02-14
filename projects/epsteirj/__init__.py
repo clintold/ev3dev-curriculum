@@ -3,6 +3,9 @@
 import ev3dev.ev3 as ev3
 import time
 import robot_controller as robo
+import tkinter
+from tkinter import ttk
+import mqtt_remote_method_calls as com
 
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
@@ -43,10 +46,10 @@ def main():
             print("Length of code is {}.".format(digits))
         elif command_to_run == 'r':
             print("Start driving over colors")
-            drive_over_colors(robot,digits)
+            code_input=drive_over_colors(robot,digits)
         elif command_to_run == 'b':
             print("beginning decoding")
-
+            display_code(code_input)
         else:
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
@@ -61,16 +64,25 @@ def drive_over_colors(robot,digits):
             if current_color == 6:
                 current_color=robot.color_sensor.color
                 code_list = code_list + current_color
-            if current_color !=6:
+            if current_color != 6:
                 current_color = 6
     robot.stop()
     return code_list
 
 
+def display_code(code,digits):
+    root = tkinter.Tk()
+    root.title = "Code Window"
 
+    main_frame = ttk.Frame(root, padding=20, relief='raised')
+    main_frame.grid()
 
-
-
+    for k in range(digits):
+        box_label = ttk.Label(main_frame, text=" ")
+        box_label.grid(row=0, column=k)
+        box = ttk.Entry(main_frame, width=4)
+        box.insert(0, "0")
+        box.grid(row=1, column=k)
 
 
 
