@@ -1,76 +1,50 @@
 import tkinter
 from tkinter import ttk
-
 import mqtt_remote_method_calls as com
+
 
 def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
 
-    root = tkinter.Tk()
-    root.title("MQTT Remote")
 
-    main_frame = ttk.Frame(root, padding=20, relief='raised')
+    root = tkinter.Tk()
+    root.title("Delivery Mainframe")
+
+    main_frame = ttk.Frame(root, padding=50)
     main_frame.grid()
 
-    left_speed_label = ttk.Label(main_frame, text="Left")
-    left_speed_label.grid(row=0, column=0)
-    left_speed_entry = ttk.Entry(main_frame, width=8)
-    left_speed_entry.insert(0, "600")
-    left_speed_entry.grid(row=1, column=0)
+    radio_frame = ttk.Frame(main_frame, borderwidth=5, relief='raised')
+    radio_frame1 = ttk.Frame(main_frame, borderwidth=5, relief='raised')
 
-    right_speed_label = ttk.Label(main_frame, text="Right")
-    right_speed_label.grid(row=0, column=2)
-    right_speed_entry = ttk.Entry(main_frame, width=8, justify=tkinter.RIGHT)
-    right_speed_entry.insert(0, "600")
-    right_speed_entry.grid(row=1, column=2)
+    pizza_color_label = ttk.Label(radio_frame, text="Type of Pizza")
+    pizza_color_label.grid(row=0, column=0)
+    pizza_color_button = ttk.Radiobutton(radio_frame, text='Red', variable='btn1', value=1)
+    pizza_color_button.grid(row=1, column=0)
+
+    pizza_color_button2 = ttk.Radiobutton(radio_frame, text='Blue', variable='btn1', value=2)
+    pizza_color_button2.grid(row=2, column=0)
+
+    pizza_color_button3 = ttk.Radiobutton(radio_frame, text='Green', variable='btn1', value=3)
+    pizza_color_button3.grid(row=3, column=0)
+
+    pizza_destination_label = ttk.Label(radio_frame1, text="Destination")
+    pizza_destination_label.grid(row=0, column=2)
+    pizza_destination_button1 = ttk.Radiobutton(radio_frame1, text='Red House', variable='btn2', value=4,)
+    pizza_destination_button1.grid(row=1, column=2)
+
+    pizza_destination_button2 = ttk.Radiobutton(radio_frame1, text='Blue House', variable='btn2', value=5)
+    pizza_destination_button2.grid(row=2, column=2)
+
+    pizza_destination_button3 = ttk.Radiobutton(radio_frame1, text='Green House', variable='btn2', value=6)
+    pizza_destination_button3.grid(row=3, column=2)
 
     # Done: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
     #
     # To help get you started the arm up and down buttons have been implemented.
     # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
     # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
-
-    forward_button = ttk.Button(main_frame, text="Forward")
-    forward_button.grid(row=2, column=1)
-    # forward_button and '<Up>' key is done for your here...
-    forward_button['command'] = lambda: move(mqtt_client, int(left_speed_entry.get()), int(right_speed_entry.get()))
-    root.bind('<Up>', lambda event: move(mqtt_client, int(left_speed_entry.get()), int(right_speed_entry.get())))
-
-    left_button = ttk.Button(main_frame, text="Left")
-    left_button.grid(row=3, column=0)
-    # left_button and '<Left>' key
-    left_button['command'] = lambda: move(mqtt_client, -int(left_speed_entry.get()), int(right_speed_entry.get()))
-    root.bind('<Left>', lambda event: move(mqtt_client, -int(left_speed_entry.get()), int(right_speed_entry.get())))
-
-    stop_button = ttk.Button(main_frame, text="Stop")
-    stop_button.grid(row=3, column=1)
-    # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
-    stop_button['command'] = lambda: stop(mqtt_client)
-    root.bind('<space>', lambda event: stop(mqtt_client))
-
-    right_button = ttk.Button(main_frame, text="Right")
-    right_button.grid(row=3, column=2)
-    # right_button and '<Right>' key
-    right_button['command'] = lambda: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get()))
-    root.bind('<Right>', lambda event: move(mqtt_client, int(left_speed_entry.get()), -int(right_speed_entry.get())))
-
-    back_button = ttk.Button(main_frame, text="Back")
-    back_button.grid(row=4, column=1)
-    # back_button and '<Down>' key
-    back_button['command'] = lambda: move(mqtt_client, -int(left_speed_entry.get()), -int(right_speed_entry.get()))
-    root.bind('<Down>', lambda event: move(mqtt_client, -int(left_speed_entry.get()), -int(right_speed_entry.get())))
-
-    up_button = ttk.Button(main_frame, text="Up")
-    up_button.grid(row=5, column=0)
-    up_button['command'] = lambda: send_up(mqtt_client)
-    root.bind('<u>', lambda event: send_up(mqtt_client))
-
-    down_button = ttk.Button(main_frame, text="Down")
-    down_button.grid(row=6, column=0)
-    down_button['command'] = lambda: send_down(mqtt_client)
-    root.bind('<j>', lambda event: send_down(mqtt_client))
 
     # Buttons for quit and exit
     q_button = ttk.Button(main_frame, text="Quit")
@@ -80,6 +54,12 @@ def main():
     e_button = ttk.Button(main_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
+
+    for radio_frame in [pizza_color_button, pizza_color_button2, pizza_color_button3]:
+        radio_frame.grid(sticky='w')
+
+    for radio_frame1 in [pizza_destination_button1, pizza_destination_button2, pizza_destination_button3]:
+        radio_frame1.grid(sticky='w')
 
     root.mainloop()
 
