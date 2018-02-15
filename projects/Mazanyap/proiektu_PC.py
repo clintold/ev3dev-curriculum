@@ -52,6 +52,14 @@ def main():
     pizza_destination_button3.grid(row=3, column=2)
     pizza_destination_button3.grid(sticky='w')
 
+    pizza_observer = tkinter.StringVar()
+    for radio in [pizza_color_button, pizza_color_button2, pizza_color_button3]:
+        radio['variable'] = pizza_observer  # They all need the SAME observer
+
+    destination_observer = tkinter.StringVar()
+    for radio in [pizza_destination_button1, pizza_destination_button2, pizza_destination_button3]:
+        radio['variable'] = destination_observer  # They all need the SAME observer
+
     checkbox_label = ttk.Label(checkbox_frame, text="Modes")
     checkbox_label.grid(row=0, column=0)
     power_mode = ttk.Checkbutton(checkbox_frame, text='Power Mode')
@@ -79,7 +87,9 @@ def main():
     # Buttons for quit and exit
     a_button = ttk.Button(button_frame, text="Activate")
     a_button.grid(row=4, column=2)
-    a_button['command'] = ()
+    a_button['command'] = (lambda: activate_program(mqtt_client, pizza_observer.get(), destination_observer.get(),
+                                                    power_mode_observer.get(),speed_mode_observer.get(),
+                                                    finesse_mode_observer.get))
 
     q_button = ttk.Button(button_frame, text="Quit")
     q_button.grid(row=5, column=2)
@@ -109,22 +119,45 @@ def main():
 
 
 def power_mode_state(power_mode_observer):
-    if power_mode_observer.get():
-        print('Power mode')
+    if power_mode_observer.get() == '1':
+        print('Power mode activated')
 
 
 def speed_mode_state(speed_mode_observer):
-    if speed_mode_observer.get():
-        print('Speed mode')
+    if speed_mode_observer.get() == '1':
+        print('Speed mode activated')
 
 
 def finesse_mode_state(finesse_mode_observer):
-    if finesse_mode_observer.get():
-        print('Finesse mode')
+    if finesse_mode_observer.get() == '1':
+        print('Finesse mode activated')
 
 
-def send_down(mqtt_client):
-    print("arm_down")
+def activate_program(mqtt_client, pizza, destination, power_mode, speed_mode, finesse_mode):
+    print('beginning delivery')
+    if finesse_mode == '1':
+        print('Finesse mode active')
+        finesse_state = True
+    else:
+        finesse_state = False
+
+    if speed_mode == '1':
+        print('Speed mode active')
+        speed = 800
+    else:
+        speed = 500
+
+    if power_mode == '1':
+        print('Power mode active')
+        power_state = True
+    else:
+        power_state = False
+
+    if pizza == '1':
+        pizza = 'Red'
+
+    print(pizza, ' being delivered to', destination, 'house')
+
     mqtt_client.send_message("arm_down")
 
 
