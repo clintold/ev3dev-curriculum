@@ -17,49 +17,70 @@ def main():
 
     radio_frame = ttk.Frame(main_frame, borderwidth=5, relief='raised')
     radio_frame1 = ttk.Frame(main_frame, borderwidth=5, relief='raised')
+    button_frame = ttk.Frame(main_frame, borderwidth=5, relief='raised')
+    checkbox_frame = ttk.Frame(main_frame, borderwidth=5, relief='raised')
+    radio_frame.grid(sticky='w')
+    radio_frame1.grid(sticky='w')
+    button_frame.grid(sticky='w')
+    checkbox_frame.grid(sticky='w')
 
     pizza_color_label = ttk.Label(radio_frame, text="Type of Pizza")
     pizza_color_label.grid(row=0, column=0)
     pizza_color_button = ttk.Radiobutton(radio_frame, text='Red', variable='btn1', value=1)
     pizza_color_button.grid(row=1, column=0)
+    pizza_color_button.grid(sticky='w')
 
     pizza_color_button2 = ttk.Radiobutton(radio_frame, text='Blue', variable='btn1', value=2)
     pizza_color_button2.grid(row=2, column=0)
+    pizza_color_button2.grid(sticky='w')
 
     pizza_color_button3 = ttk.Radiobutton(radio_frame, text='Green', variable='btn1', value=3)
     pizza_color_button3.grid(row=3, column=0)
+    pizza_color_button3.grid(sticky='w')
 
     pizza_destination_label = ttk.Label(radio_frame1, text="Destination")
     pizza_destination_label.grid(row=0, column=2)
     pizza_destination_button1 = ttk.Radiobutton(radio_frame1, text='Red House', variable='btn2', value=4,)
     pizza_destination_button1.grid(row=1, column=2)
+    pizza_destination_button1.grid(sticky='w')
 
     pizza_destination_button2 = ttk.Radiobutton(radio_frame1, text='Blue House', variable='btn2', value=5)
     pizza_destination_button2.grid(row=2, column=2)
+    pizza_destination_button2.grid(sticky='w')
 
     pizza_destination_button3 = ttk.Radiobutton(radio_frame1, text='Green House', variable='btn2', value=6)
     pizza_destination_button3.grid(row=3, column=2)
+    pizza_destination_button3.grid(sticky='w')
 
-    # Done: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
-    #
-    # To help get you started the arm up and down buttons have been implemented.
-    # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
-    # out. You will need to change some_callback1 to some better name, then pattern match for other button / key combos.
+    checkbox_label = ttk.Label(checkbox_frame, text="Modes")
+    checkbox_label.grid(row=0, column=0)
+    power_mode = ttk.Checkbutton(checkbox_frame, text='Power Mode')
+    power_mode.grid(row=1, column=0)
+
+    speed_mode = ttk.Checkbutton(checkbox_frame, text='Speed Mode')
+    speed_mode.grid(row=2, column=0)
+
+    finesse_mode = ttk.Checkbutton(checkbox_frame, text='Finesse Mode')
+    finesse_mode.grid(row=3, column=0)
+
 
     # Buttons for quit and exit
-    q_button = ttk.Button(main_frame, text="Quit")
+    a_button = ttk.Button(button_frame, text="Activate")
+    a_button.grid(row=4, column=2)
+    a_button['command'] = ()
+
+    q_button = ttk.Button(button_frame, text="Quit")
     q_button.grid(row=5, column=2)
     q_button['command'] = (lambda: quit_program(mqtt_client, False))
 
-    e_button = ttk.Button(main_frame, text="Exit")
+    e_button = ttk.Button(button_frame, text="Exit")
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
-    for radio_frame in [pizza_color_button, pizza_color_button2, pizza_color_button3]:
-        radio_frame.grid(sticky='w')
-
-    for radio_frame1 in [pizza_destination_button1, pizza_destination_button2, pizza_destination_button3]:
-        radio_frame1.grid(sticky='w')
+    c = 0
+    for widget in [radio_frame, radio_frame1, checkbox_frame, button_frame]:
+        widget.grid(row=0, column=c, padx=10)
+        c = c + 1
 
     root.mainloop()
 
