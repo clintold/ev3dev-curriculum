@@ -63,6 +63,18 @@ def main():
     finesse_mode = ttk.Checkbutton(checkbox_frame, text='Finesse Mode')
     finesse_mode.grid(row=3, column=0)
 
+    power_mode_observer = tkinter.StringVar()
+    power_mode['variable'] = power_mode_observer
+
+    speed_mode_observer = tkinter.StringVar()
+    speed_mode['variable'] = speed_mode_observer
+
+    finesse_mode_observer = tkinter.StringVar()
+    finesse_mode['variable'] = finesse_mode_observer
+
+    power_mode['command'] = lambda: power_mode_state(power_mode_observer)
+    speed_mode['command'] = lambda: speed_mode_state(speed_mode_observer)
+    finesse_mode['command'] = lambda: finesse_mode_state(finesse_mode_observer)
 
     # Buttons for quit and exit
     a_button = ttk.Button(button_frame, text="Activate")
@@ -96,10 +108,19 @@ def main():
 # remote control that can do A LOT more than an IR Remote.  We are just doing the basics here.
 
 
-# Arm command callbacks
-def send_up(mqtt_client):
-    print("arm_up")
-    mqtt_client.send_message("arm_up")
+def power_mode_state(power_mode_observer):
+    if power_mode_observer.get():
+        print('Power mode')
+
+
+def speed_mode_state(speed_mode_observer):
+    if speed_mode_observer.get():
+        print('Speed mode')
+
+
+def finesse_mode_state(finesse_mode_observer):
+    if finesse_mode_observer.get():
+        print('Finesse mode')
 
 
 def send_down(mqtt_client):
