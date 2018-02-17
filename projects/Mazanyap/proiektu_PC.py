@@ -26,29 +26,29 @@ def main():
 
     pizza_color_label = ttk.Label(radio_frame, text="Type of Pizza")
     pizza_color_label.grid(row=0, column=0)
-    pizza_color_button = ttk.Radiobutton(radio_frame, text='Red', variable='btn1', value=1)
+    pizza_color_button = ttk.Radiobutton(radio_frame, text='Red', variable='btn1', value='Red')
     pizza_color_button.grid(row=1, column=0)
     pizza_color_button.grid(sticky='w')
 
-    pizza_color_button2 = ttk.Radiobutton(radio_frame, text='Blue', variable='btn1', value=2)
+    pizza_color_button2 = ttk.Radiobutton(radio_frame, text='Blue', variable='btn1', value='Blue')
     pizza_color_button2.grid(row=2, column=0)
     pizza_color_button2.grid(sticky='w')
 
-    pizza_color_button3 = ttk.Radiobutton(radio_frame, text='Green', variable='btn1', value=3)
+    pizza_color_button3 = ttk.Radiobutton(radio_frame, text='Green', variable='btn1', value='Green')
     pizza_color_button3.grid(row=3, column=0)
     pizza_color_button3.grid(sticky='w')
 
     pizza_destination_label = ttk.Label(radio_frame1, text="Destination")
     pizza_destination_label.grid(row=0, column=2)
-    pizza_destination_button1 = ttk.Radiobutton(radio_frame1, text='Red House', variable='btn2', value=4,)
+    pizza_destination_button1 = ttk.Radiobutton(radio_frame1, text='Red House', variable='btn2', value='Red House')
     pizza_destination_button1.grid(row=1, column=2)
     pizza_destination_button1.grid(sticky='w')
 
-    pizza_destination_button2 = ttk.Radiobutton(radio_frame1, text='Blue House', variable='btn2', value=5)
+    pizza_destination_button2 = ttk.Radiobutton(radio_frame1, text='Blue House', variable='btn2', value='Blue House')
     pizza_destination_button2.grid(row=2, column=2)
     pizza_destination_button2.grid(sticky='w')
 
-    pizza_destination_button3 = ttk.Radiobutton(radio_frame1, text='Green House', variable='btn2', value=6)
+    pizza_destination_button3 = ttk.Radiobutton(radio_frame1, text='Green House', variable='btn2', value='Green House')
     pizza_destination_button3.grid(row=3, column=2)
     pizza_destination_button3.grid(sticky='w')
 
@@ -89,7 +89,7 @@ def main():
     a_button.grid(row=4, column=2)
     a_button['command'] = (lambda: activate_program(mqtt_client, pizza_observer.get(), destination_observer.get(),
                                                     power_mode_observer.get(),speed_mode_observer.get(),
-                                                    finesse_mode_observer.get))
+                                                    finesse_mode_observer.get()))
 
     q_button = ttk.Button(button_frame, text="Quit")
     q_button.grid(row=5, column=2)
@@ -153,10 +153,7 @@ def activate_program(mqtt_client, pizza, destination, power_mode, speed_mode, fi
     else:
         power_state = False
 
-    if pizza == '1':
-        pizza = 'Red'
-
-    print(pizza, ' being delivered to', destination, 'house')
+    print(pizza, 'pizza being delivered to', destination)
 
     mqtt_client.send_message("arm_down")
 
