@@ -240,4 +240,3 @@ class Snatch3r(object):
 
         ev3.Leds.all_off()
         ev3.Sound.speak("Pizza Delivered. Mama Mia").wait()
-        
