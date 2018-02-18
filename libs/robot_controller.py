@@ -171,7 +171,13 @@ class Snatch3r(object):
 
     def seek_pizza(self, color, speed, finesse, power):
         """The robot seeks out the pizza"""
-        self.pixy.mode = "SIG1"
+        if color == 'Red':
+            self.pixy.mode = "SIG2"
+        elif color == 'BLUE':
+            self.pixy.mode = "SIG1"
+        else:
+            self.pixy.mode = "SIG3"
+
         turn_speed = 100
 
         if finesse:
