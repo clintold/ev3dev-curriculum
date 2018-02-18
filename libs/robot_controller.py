@@ -168,3 +168,25 @@ class Snatch3r(object):
                 else:
                     print("failure")
             time.sleep(0.3)
+
+    def seek_pizza(self, color, speed, finesse, power):
+        """The robot seeks out the pizza"""
+        self.pixy.mode = "SIG1"
+        turn_speed = 100
+
+        #print("(X, Y) = ({}, {})".format(x, y))
+
+        while not self.touch_sensor.is_pressed:
+            x = self.pixy.value(1)
+            y = self.pixy.value(2)
+            if x < 150:
+                self.drive_until_otherwise(turn_speed, -turn_speed)
+
+            else:
+                if x > 170:
+                    self.drive_until_otherwise(-turn_speed, turn_speed)
+
+                else:
+                    self.drive_inches(15, speed)
+
+            time.sleep(0.25)
