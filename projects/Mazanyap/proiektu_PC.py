@@ -155,8 +155,8 @@ def activate_program(mqtt_client, pizza, destination, power_mode, speed_mode, fi
 
     print(pizza, 'pizza being delivered to', destination)
 
-    mqtt_client.send_message("arm_down")
-
+    mqtt_client.send_message("seek_pizza", [pizza, speed, finesse_state, power_state])
+    mqtt_client.send_message("seek_destination", [destination, speed])
 
 def move(mqtt_client, left_speed ,right_speed):
     print('move')
