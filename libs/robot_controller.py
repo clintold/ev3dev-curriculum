@@ -174,11 +174,20 @@ class Snatch3r(object):
         self.pixy.mode = "SIG1"
         turn_speed = 100
 
-        #print("(X, Y) = ({}, {})".format(x, y))
+        if finesse:
+            ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.ORANGE)
+            ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+
+        if power:
+            ev3.Sound.speak("AHHHHHHHHHHHHH").wait()
 
         while not self.touch_sensor.is_pressed:
             x = self.pixy.value(1)
             y = self.pixy.value(2)
+            width = self.pixy.value(3)
+            if width > 200:
+                self.arm_up()
+
             if x < 150:
                 self.drive_until_otherwise(turn_speed, -turn_speed)
 
@@ -190,3 +199,5 @@ class Snatch3r(object):
                     self.drive_inches(15, speed)
 
             time.sleep(0.25)
+
+        ev3.Sound.speak("Pizza probably acquired").wait()
