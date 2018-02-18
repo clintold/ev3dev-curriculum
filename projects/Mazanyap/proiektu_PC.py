@@ -7,8 +7,6 @@ def main():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
-
-
     root = tkinter.Tk()
     root.title("Delivery Mainframe")
 
@@ -137,9 +135,9 @@ def activate_program(mqtt_client, pizza, destination, power_mode, speed_mode, fi
     print('beginning delivery')
     if finesse_mode == '1':
         print('Finesse mode active')
-        finesse_state = True
+        finesse_state = 1
     else:
-        finesse_state = False
+        finesse_state = 0
 
     if speed_mode == '1':
         print('Speed mode active')
@@ -149,18 +147,15 @@ def activate_program(mqtt_client, pizza, destination, power_mode, speed_mode, fi
 
     if power_mode == '1':
         print('Power mode active')
-        power_state = True
+        power_state = 1
     else:
-        power_state = False
+        power_state = 0
 
     print(pizza, 'pizza being delivered to', destination)
 
     mqtt_client.send_message("seek_pizza", [pizza, speed, finesse_state, power_state])
     mqtt_client.send_message("seek_destination", [destination, speed])
 
-def move(mqtt_client, left_speed ,right_speed):
-    print('move')
-    mqtt_client.send_message("drive_until_otherwise", [right_speed, left_speed])
 
 
 def stop(mqtt_client):

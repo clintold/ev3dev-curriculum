@@ -171,10 +171,12 @@ class Snatch3r(object):
 
     def seek_pizza(self, color, speed, finesse, power):
         """The robot seeks out the pizza"""
+        ev3.Sound.speak("seeking").wait()
+
         if color == 'Red':
-            self.pixy.mode = "SIG2"
-        elif color == 'Blue':
             self.pixy.mode = "SIG1"
+        elif color == 'Blue':
+            self.pixy.mode = "SIG5"
         else:
             self.pixy.mode = "SIG3"
 
@@ -191,18 +193,22 @@ class Snatch3r(object):
             x = self.pixy.value(1)
             y = self.pixy.value(2)
             width = self.pixy.value(3)
-            if width > 200:
+            #if width > 50.5:
+                #self.stop()
+                #self.arm_up()
+            if self.ir_sensor.proximity < .5:
+                self.stop()
                 self.arm_up()
 
-            if x < 150:
+            if x < 155:
                 self.drive_until_otherwise(turn_speed, -turn_speed)
 
             else:
-                if x > 170:
+                if x > 175:
                     self.drive_until_otherwise(-turn_speed, turn_speed)
 
                 else:
-                    self.drive_inches(15, speed)
+                    self.drive_inches(4, speed)
 
             time.sleep(0.25)
 
@@ -210,21 +216,25 @@ class Snatch3r(object):
 
     def seek_destination(self, color, speed):
         """The robot seeks out the pizza"""
+        ev3.Sound.speak("destination now")
+
         if color == 'Red House':
-            self.pixy.mode = "SIG2"
-        elif color == 'Blue House':
             self.pixy.mode = "SIG1"
+        elif color == 'Blue House':
+            self.pixy.mode = "SIG5"
         else:
             self.pixy.mode = "SIG3"
 
         turn_speed = 100
 
-        while not self.touch_sensor.is_pressed:
+        while True:
             x = self.pixy.value(1)
             y = self.pixy.value(2)
             width = self.pixy.value(3)
-            if width > 200:
+            if width > 53:
+                self.stop()
                 self.arm_down()
+                break
 
             if x < 150:
                 self.drive_until_otherwise(turn_speed, -turn_speed)
@@ -234,9 +244,10 @@ class Snatch3r(object):
                     self.drive_until_otherwise(-turn_speed, turn_speed)
 
                 else:
-                    self.drive_inches(15, speed)
+                    self.drive_inches(4, speed)
 
             time.sleep(0.25)
 
         ev3.Leds.all_off()
-        ev3.Sound.speak("Pizza Delivered. Mama Mia").wait()
+        self.stop()
+        ev3.Sound.speak("Pizza Delivered. Mama Mee uh").wait()
