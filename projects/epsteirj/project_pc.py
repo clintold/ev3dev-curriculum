@@ -43,12 +43,11 @@ def main():
             code_input=drive_over_colors(robot,digits)
         elif command_to_run == 'b':
             print("beginning decoding")
-            display_code(code_input)
+            display_code()
         else:
             print(command_to_run, "is not a known command. Please enter a valid choice.")
 
-def main():
-    code=2
+def display_code():
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
 
@@ -123,12 +122,12 @@ def main():
 
     return_button = ttk.Button(main_frame, text="enter")
     return_button.grid(row=4, column=(9))
-    return_button['command'] = (lambda: check_code(box1.get()))
+    return_button['command'] = (lambda: check_code(box1.get(), box2.get(), box3.get(), box4.get(), box5.get(), box6.get(), box7.get(), box8.get(), box9.get(), box10.get()))
 
     root.mainloop()
 
-def check_code(box1):
-    print(box1)
+def check_code(b1,b2,b3,b4,b5,b6,b7,b8,b9,b10):
+    print(b1)
 
 
 main()
