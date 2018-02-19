@@ -1,9 +1,7 @@
 
-
 import ev3dev.ev3 as ev3
 import robot_controller as robo
-import tkinter
-from tkinter import ttk
+
 
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
