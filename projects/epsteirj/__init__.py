@@ -1,7 +1,7 @@
 
 import ev3dev.ev3 as ev3
 import robot_controller as robo
-
+import mqtt_remote_method_calls as com
 
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
@@ -9,6 +9,8 @@ COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brow
 def main():
     digits = 5
     robot = robo.Snatch3r()
+    mqtt_client = com.MqttClient(robot)
+    mqtt_client.connect_to_pc()
     while True:
         command_to_run = input("Whole number value up to ten, r (for running), or b (break the code): ")
         if command_to_run == '1':
