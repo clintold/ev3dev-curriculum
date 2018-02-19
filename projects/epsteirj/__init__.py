@@ -12,7 +12,7 @@ def main():
     digits = 5
     robot = robo.Snatch3r()
     while True:
-        command_to_run = input("Whole number value up to ten,r (for running), or b (break the code): ")
+        command_to_run = input("Whole number value up to ten, r (for running), or b (break the code): ")
         if command_to_run == '1':
             digits = 1
             print("Length of code is {}.".format(digits))
