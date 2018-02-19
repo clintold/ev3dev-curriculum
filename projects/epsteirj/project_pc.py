@@ -6,6 +6,7 @@ def main():
     code=2
     mqtt_client = com.MqttClient()
     mqtt_client.connect_to_ev3()
+
     root = tkinter.Tk()
     root.title = "Code Window"
 
@@ -21,6 +22,8 @@ def main():
     return_button = ttk.Button(main_frame, text="enter")
     return_button.grid(row=4, column=(5))
     return_button['command'] = (lambda: check_code(code))
+
+    root.mainloop()
 
 def check_code(code):
     print(code)
