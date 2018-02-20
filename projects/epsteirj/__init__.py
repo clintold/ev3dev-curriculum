@@ -35,11 +35,8 @@ class bot(object):
         self.code=[]
         while len(self.code) != digits:
             self.drive_until_otherwise(500, 500)
-            ev3.Sound.speak("apple").wait()
             if self.color_sensor.color != old_color:
-                ev3.Sound.speak("banana").wait()
                 if old_color == 6:
-                    ev3.Sound.speak("your mom").wait()
                     old_color = self.color_sensor.color
                     self.code = self.code + old_color
                 else:
