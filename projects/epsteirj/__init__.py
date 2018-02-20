@@ -30,6 +30,7 @@ class bot(object):
         assert self.arm_motor.connected
 
     def drive_over_colors(self, digits):
+        COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
         ev3.Sound.speak("Driving over Colors").wait()
         old_color = 6
         self.code=[]
