@@ -43,8 +43,9 @@ class bot(object):
                     current_color = 6
         self.stop()
         while self.running == True:
+            ev3.Sound.speak("starting sequence").wait()
             for k in range(digits):
-                ev3.Sound.speak(COLOR_NAMES[self.code[k]])
+                ev3.Sound.speak(COLOR_NAMES[self.code[k]]).wait()
                 time.sleep(.5)
 
 
