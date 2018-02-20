@@ -17,12 +17,38 @@ import mqtt_remote_method_calls as com
 def main():
     # Setting up client and connecting to PC
     robot = robo.Snatch3r
-
-    mqtt_client = com.MqttClient()
-    mqtt_client.connect_to_ev3()
-
     root = tkinter.Tk()
     root.title("The Ohio State")
+
+    class MyDelegate:
+        def __init__(self):
+            self.red_score = 0
+            self.blue_score = 0
+
+        def add_red(self):
+            self.red_score = self.red_score + 1
+            print('red',self.red_score)
+            red_score_label = ttk.Label(main_frame, text="Red")
+            red_score_label.grid(row=9, column=2)
+            red_score_score = ttk.Label(main_frame, text=self.red_score)
+            red_score_score.grid(row=10, column=2)
+
+        def add_blue(self):
+            self.blue_score = self.blue_score + 1
+            print(self.blue_score,'blue')
+            blue_score_label = ttk.Label(main_frame, text="Blue")
+            blue_score_label.grid(row=9, column=0)
+            blue_score_score = ttk.Label(main_frame, text=self.blue_score)
+            blue_score_score.grid(row=10, column=0)
+
+        def print_value(self, value):
+            print(value)
+
+    my_delegate = MyDelegate()
+    mqtt_client = com.MqttClient(my_delegate)
+    mqtt_client.connect_to_ev3()
+
+
 
     main_frame = ttk.Frame(root, padding=20, relief='raised')
     main_frame.grid()
@@ -104,26 +130,6 @@ def main():
     # if current_color == ev3.ColorSensor.COLOR_RED:
     #     # will add to the red team score
     #     red_score = red_score + 1
-
-
-    class MyDelegate:
-        def __init__(self):
-            self.red_score = 0
-            self.blue_score = 0
-
-        def add_red(self):
-            self.red_score = self.red_score + 1
-            red_score_label = ttk.Label(main_frame, text="Red")
-            red_score_label.grid(row=9, column=2)
-            red_score_score = ttk.Label(main_frame, text=self.red_score)
-            red_score_score.grid(row=10, column=2)
-
-        def add_blue(self):
-            self.blue_score = self.blue_score + 1
-            blue_score_label = ttk.Label(main_frame, text="Blue")
-            blue_score_label.grid(row=9, column=0)
-            blue_score_score = ttk.Label(main_frame, text=self.blue_score)
-            blue_score_score.grid(row=10, column=0)
 
 
 
