@@ -42,6 +42,10 @@ class bot(object):
                 if current_color != 6:
                     current_color = 6
         self.stop()
+        while self.running == True:
+            for k in range(digits):
+                ev3.Sound.speak(COLOR_NAMES[self.code[k]])
+                time.sleep(.5)
 
 
     def drive_until_otherwise(self, rspeed, lspeed):
