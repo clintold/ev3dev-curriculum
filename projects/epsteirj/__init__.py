@@ -35,6 +35,7 @@ class bot(object):
         self.code=[]
         while len(self.code) != digits:
             self.drive_until_otherwise(500, 500)
+            print(old_color)
             if self.color_sensor.color != old_color:
                 if old_color == 6:
                     old_color = self.color_sensor.color
