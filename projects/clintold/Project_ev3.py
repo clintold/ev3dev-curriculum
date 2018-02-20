@@ -8,14 +8,15 @@ def main():
     btn = ev3.Button()
     robot = robo.Snatch3r()
     robot.arm_calibration()
+    mqtt_client = com.MqttClient(robot)
+    mqtt_client.connect_to_pc()
     while not btn.backspace:
-
-        mqtt_client = com.MqttClient(robot)
-        mqtt_client.connect_to_pc()
         if current_color == ev3.ColorSensor.COLOR_RED:
             # will add to the red team score
             mqtt_client.send_message("add_red",[])
         if current_color == ev3.ColorSensor.COLOR_BLUE:
             mqtt_client.send_message("add_blue", [])
-
     robot.shutdown()
+
+
+main()

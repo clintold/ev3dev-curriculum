@@ -105,7 +105,6 @@ def main():
     #     # will add to the red team score
     #     red_score = red_score + 1
 
-    spirit_value = spirit.get()
 
     class MyDelegate:
         def __init__(self):
