@@ -47,7 +47,7 @@ class bot(object):
             ev3.Sound.speak("starting sequence").wait()
             for k in range(digits):
                 ev3.Sound.speak([self.code[k]]).wait()
-                time.sleep(.3)
+                time.sleep(.2)
 
 
     def drive_until_otherwise(self, rspeed, lspeed):
