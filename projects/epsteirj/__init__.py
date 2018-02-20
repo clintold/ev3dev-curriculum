@@ -30,26 +30,24 @@ class bot(object):
         assert self.arm_motor.connected
 
     def drive_over_colors(self, digits):
+        COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
         ev3.Sound.speak("Driving over Colors").wait()
         old_color = 6
         self.code=[]
         while len(self.code) != digits:
             self.drive_until_otherwise(500, 500)
-            ev3.Sound.speak("apple").wait()
             if self.color_sensor.color != old_color:
-                ev3.Sound.speak("banana").wait()
                 if old_color == 6:
-                    ev3.Sound.speak("your mom").wait()
                     old_color = self.color_sensor.color
-                    self.code = self.code + old_color
+                    self.code.append(old_color)
                 else:
                     old_color = 6
         self.stop()
         while self.running:
             ev3.Sound.speak("starting sequence").wait()
             for k in range(digits):
-                ev3.Sound.speak(COLOR_NAMES[self.code[k]]).wait()
-                time.sleep(.5)
+                ev3.Sound.speak([self.code[k]]).wait()
+                time.sleep(.2)
 
 
     def drive_until_otherwise(self, rspeed, lspeed):

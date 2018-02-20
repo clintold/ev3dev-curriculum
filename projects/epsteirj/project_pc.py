@@ -148,7 +148,7 @@ def check_code(b1,b2,b3,b4,b5,b6,b7,b8,b9,b10):
         code = code+[b9]
     if b10 != '0':
         code = code+[b10]
-    if code == ['1','2','3','4','5']:
+    if code == ['5','2','5','2','5']:
         print('success')
     else:
         print('fail')
