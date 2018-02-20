@@ -2,6 +2,7 @@
 import ev3dev.ev3 as ev3
 import robot_controller as robo
 import mqtt_remote_method_calls as com
+import time
 
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
@@ -52,11 +53,17 @@ class bot(object):
         self.left_motor.stop(stop_action="brake")
         self.right_motor.stop(stop_action="brake")
 
+    def loop_forever(self):
+        """Waits forever for a certain imput"""
+        self.running = True
+        while self.running:
+            time.sleep(0.01)
+
 def main():
-    digits = 5
     robot = robo.Snatch3r()
     mqtt_client = com.MqttClient(robot)
     mqtt_client.connect_to_pc()
+    robot.loop_forever()
 
 
 
