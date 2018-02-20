@@ -9,6 +9,7 @@ COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brow
 class bot(object):
 
     def __init__(self):
+        self.robot = robo.Snatch3r()
         self.mqtt_client = None
         self.running = True
         self.touch_sensor = ev3.TouchSensor()
@@ -60,10 +61,10 @@ class bot(object):
             time.sleep(0.01)
 
 def main():
-    robot = robo.Snatch3r()
-    mqtt_client = com.MqttClient(robot)
+    my_delegate=bot()
+    mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
-    robot.loop_forever()
+    my_delegate.loop_forever()
 
 
 
