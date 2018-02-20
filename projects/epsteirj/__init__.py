@@ -37,6 +37,7 @@ class bot(object):
             self.drive_until_otherwise(500, 500)
             if self.color_sensor.color != old_color:
                 if old_color == 6:
+                    ev3.Sound.speak("your mom").wait()
                     old_color = self.color_sensor.color
                     self.code = self.code + old_color
                 else:
