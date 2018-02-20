@@ -40,7 +40,7 @@ def main():
             print("Length of code is {}.".format(digits))
         elif command_to_run == 'r':
             print("Start driving over colors")
-            code_input=drive_over_colors(robot,digits)
+            mqtt_client.send_message("drive_over_colors", [digits])
         elif command_to_run == 'b':
             print("beginning decoding")
             display_code()
@@ -127,7 +127,30 @@ def display_code():
     root.mainloop()
 
 def check_code(b1,b2,b3,b4,b5,b6,b7,b8,b9,b10):
-    print(b1)
-
+    code = []
+    if b1 != '0':
+        code = code+[b1]
+    if b2 != '0':
+        code = code+[b2]
+    if b3 != '0':
+        code = code+[b3]
+    if b4 != '0':
+        code = code+[b4]
+    if b5 != '0':
+        code = code+[b5]
+    if b6 != '0':
+        code = code+[b6]
+    if b7 != '0':
+        code = code+[b7]
+    if b8 != '0':
+        code = code+[b8]
+    if b9 != '0':
+        code = code+[b9]
+    if b10 != '0':
+        code = code+[b10]
+    if code == ['1','2','3','4','5']:
+        print('success')
+    else:
+        print('fail')
 
 main()

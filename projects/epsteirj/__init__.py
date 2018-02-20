@@ -2,81 +2,77 @@
 import ev3dev.ev3 as ev3
 import robot_controller as robo
 import mqtt_remote_method_calls as com
+import time
 
 COLOR_NAMES = ["None", "Black", "Blue", "Green", "Yellow", "Red", "White", "Brown"]
 
+class bot(object):
+
+    def __init__(self):
+        self.robot = robo.Snatch3r()
+        self.mqtt_client = None
+        self.running = True
+        self.touch_sensor = ev3.TouchSensor()
+        self.seeker = ev3.BeaconSeeker(channel=1)
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+        self.color_sensor = ev3.ColorSensor()
+        self.ir_sensor = ev3.InfraredSensor()
+
+        self.code=[]
+
+        assert self.color_sensor
+        assert self.ir_sensor
+        assert self.left_motor.connected
+        assert self.right_motor.connected
+        assert self.arm_motor.connected
+
+    def drive_over_colors(self, digits):
+        ev3.Sound.speak("Driving over Colors").wait()
+        old_color = 6
+        self.code=[]
+        while len(self.code) != digits:
+            self.drive_until_otherwise(500, 500)
+            ev3.Sound.speak("apple").wait()
+            if self.color_sensor.color != old_color:
+                ev3.Sound.speak("banana").wait()
+                if old_color == 6:
+                    ev3.Sound.speak("your mom").wait()
+                    old_color = self.color_sensor.color
+                    self.code = self.code + old_color
+                else:
+                    old_color = 6
+        self.stop()
+        while self.running:
+            ev3.Sound.speak("starting sequence").wait()
+            for k in range(digits):
+                ev3.Sound.speak(COLOR_NAMES[self.code[k]]).wait()
+                time.sleep(.5)
+
+
+    def drive_until_otherwise(self, rspeed, lspeed):
+        """Turns the robot at a certain speed forever"""
+        self.left_motor.run_forever(speed_sp=lspeed)
+        self.right_motor.run_forever(speed_sp=rspeed)
+
+    def stop(self):
+        """Stops the robot's motors"""
+        self.left_motor.stop(stop_action="brake")
+        self.right_motor.stop(stop_action="brake")
+
+    def loop_forever(self):
+        """Waits forever for a certain imput"""
+        self.running = True
+        while self.running:
+            time.sleep(0.01)
 
 def main():
-    digits = 5
-    robot = robo.Snatch3r()
-    mqtt_client = com.MqttClient(robot)
+    my_delegate=bot()
+    mqtt_client = com.MqttClient(my_delegate)
     mqtt_client.connect_to_pc()
-    while True:
-        command_to_run = input("Whole number value up to ten, r (for running), or b (break the code): ")
-        if command_to_run == '1':
-            digits = 1
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '2':
-            digits = 2
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '3':
-            digits = 3
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '4':
-            digits = 4
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '5':
-            digits = 5
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '6':
-            digits = 6
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '7':
-            digits = 7
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '8':
-            digits = 8
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '9':
-            digits = 9
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == '10':
-            digits = 10
-            print("Length of code is {}.".format(digits))
-        elif command_to_run == 'r':
-            print("Start driving over colors")
-            code_input=drive_over_colors(robot,digits)
-        elif command_to_run == 'b':
-            print("beginning decoding")
-            display_code(code_input)
-        else:
-            print(command_to_run, "is not a known command. Please enter a valid choice.")
-
-
-def drive_over_colors(robot,digits):
-    ev3.Sound.speak("Driving over Colors").wait()
-    code_list = []
-    current_color = 6
-    while not len(code_list) == digits:
-        robot.drive_until_otherwise(500,500)
-        if robot.color_sensor.color != current_color:
-            if current_color == 6:
-                current_color=robot.color_sensor.color
-                code_list = code_list + current_color
-            if current_color != 6:
-                current_color = 6
-    robot.stop()
-    return code_list
-
-
-
-def check_code(code):
-    expected_code = [1,2,3,4,5]
-    if expected_code == code:
-        print('congratulations, you cracked the code')
-    else:
-        print('try again')
-        main()
+    my_delegate.loop_forever()
 
 
 
