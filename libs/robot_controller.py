@@ -251,3 +251,6 @@ class Snatch3r(object):
         ev3.Leds.all_off()
         self.stop()
         ev3.Sound.speak("Pizza Delivered. Mama Mee uh").wait()
+
+    def spirit(self,tone):
+        ev3.Sound.tone(tone,3000)

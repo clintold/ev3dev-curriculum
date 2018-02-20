@@ -41,7 +41,7 @@ def main():
 
     spirit_label = ttk.Label(main_frame,text="Fighting Spirit!")
     spirit_label.grid(row=8,column=1)
-    spirit = Scale(main_frame, from_=0, to=900, orient=HORIZONTAL)
+    spirit = Scale(main_frame, from_=0, to=5000, orient=HORIZONTAL)
     spirit.grid(row=7, column=1)
 
     forward_button = ttk.Button(main_frame, text="Forward")
@@ -93,18 +93,39 @@ def main():
     e_button.grid(row=6, column=2)
     e_button['command'] = (lambda: quit_program(mqtt_client, True))
 
-    color_sensor = ev3.ColorSensor()
-    current_color = color_sensor.color
+    update_button = ttk.Button(main_frame, text='Renew Spirit')
+    update_button.grid(row=10,column=1)
+    update_button['command'] = (lambda: update_spirit(mqtt_client, spirit.get()))
+
+    # color_sensor = ev3.ColorSensor()
+    # current_color = color_sensor.color
     red_score = 0
 
-    if current_color == ev3.ColorSensor.COLOR_RED:
-        # will add to the red team score
-        red_score = red_score + 1
+    # if current_color == ev3.ColorSensor.COLOR_RED:
+    #     # will add to the red team score
+    #     red_score = red_score + 1
 
-    red_score_label = ttk.Label(main_frame, text="Red")
-    red_score_label.grid(row=9, column=2)
-    red_score_score = ttk.Label(main_frame, text=red_score)
-    red_score_score.grid(row=10, column=2)
+    spirit_value = spirit.get()
+
+    class MyDelegate:
+        def __init__(self):
+            self.red_score = 0
+            self.blue_score = 0
+
+        def add_red(self):
+            self.red_score = self.red_score + 1
+            red_score_label = ttk.Label(main_frame, text="Red")
+            red_score_label.grid(row=9, column=2)
+            red_score_score = ttk.Label(main_frame, text=self.red_score)
+            red_score_score.grid(row=10, column=2)
+
+        def add_blue(self):
+            self.blue_score = self.blue_score + 1
+            blue_score_label = ttk.Label(main_frame, text="Blue")
+            blue_score_label.grid(row=9, column=0)
+            blue_score_score = ttk.Label(main_frame, text=self.blue_score)
+            blue_score_score.grid(row=10, column=0)
+
 
 
 
@@ -152,8 +173,8 @@ def quit_program(mqtt_client, shutdown_ev3):
     exit()
 
 
-def show_values():
-    print(spirit.get())
+def update_spirit(mqtt_client,spirit_value):
+    mqtt_client.send_message("spirit", [spirit_value])
 # ----------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
 # ----------------------------------------------------------------------
