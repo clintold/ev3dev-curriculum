@@ -31,18 +31,18 @@ class bot(object):
 
     def drive_over_colors(self, digits):
         ev3.Sound.speak("Driving over Colors").wait()
-        current_color = 6
+        old_color = 6
         self.code=[]
-        while not len(self.code) == digits:
+        while len(self.code) != digits:
             self.drive_until_otherwise(500, 500)
-            if self.color_sensor.color != current_color:
-                if current_color == 6:
-                    current_color = self.color_sensor.color
-                    self.code = self.code + current_color
-                if current_color != 6:
-                    current_color = 6
+            if self.color_sensor.color != old_color:
+                if old_color == 6:
+                    old_color = self.color_sensor.color
+                    self.code = self.code + old_color
+                else:
+                    old_color = 6
         self.stop()
-        while self.running == True:
+        while self.running:
             ev3.Sound.speak("starting sequence").wait()
             for k in range(digits):
                 ev3.Sound.speak(COLOR_NAMES[self.code[k]]).wait()
