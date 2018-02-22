@@ -121,7 +121,7 @@ def display_code():
     spacing_label.grid(row=2, column=9)
 
     return_button = ttk.Button(main_frame, text="enter")
-    return_button.grid(row=4, column=(9))
+    return_button.grid(row=4, column=9)
     return_button['command'] = (lambda: check_code(box1.get(), box2.get(), box3.get(), box4.get(), box5.get(), box6.get(), box7.get(), box8.get(), box9.get(), box10.get()))
 
     root.mainloop()
